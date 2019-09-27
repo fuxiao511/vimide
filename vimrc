@@ -53,7 +53,7 @@ set fileencodings=gb2312,utf-8,gbk
 set fileformat=unix
 
 set background=dark
-colorscheme vividchalk
+" colorscheme vividchalk
 
 " gui settings
 if has("gui_running")
@@ -76,8 +76,8 @@ autocmd BufReadPost *
 "}}}
 
 " Key Bindings: {{{
-let mapleader = ","
-let maplocalleader = "\\"
+let mapleader = "'"
+let maplocalleader = ","
 
 " map : -> <space>
 map <Space> :
@@ -137,7 +137,7 @@ let MRU_Window_Height = 10
 nmap <Leader>r :MRU<cr>
 
 " taglist
-let g:Tlist_WinWidth = 25
+let g:Tlist_WinWidth = 32
 let g:Tlist_Use_Right_Window = 0
 let g:Tlist_Auto_Update = 1
 let g:Tlist_Process_File_Always = 1
@@ -165,14 +165,29 @@ let g:snip_company  = "SIC Microelectronics CO. Ltd"
 source $VIMRUNTIME/ftplugin/man.vim
 
 " cscope
-nmap <leader>ss :cs find s <C-R>=expand("<cword>")<cr><cr>
-nmap <leader>sg :cs find g <C-R>=expand("<cword>")<cr><cr>
-nmap <leader>sc :cs find c <C-R>=expand("<cword>")<cr><cr>
-nmap <leader>st :cs find t <C-R>=expand("<cword>")<cr><cr>
-nmap <leader>se :cs find e <C-R>=expand("<cword>")<cr><cr>
-nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<cr><cr>
-nmap <leader>si :cs find i <C-R>=expand("<cfile>")<cr><cr>
-nmap <leader>sd :cs find d <C-R>=expand("<cword>")<cr><cr>
+
+if has("cscope") && filereadable("/usr/bin/cscope")
+   set csprg=/usr/bin/cscope
+   set csto=0
+   set cst
+   set nocsverb
+   " add any database in current directory
+   if filereadable("cscope.out")
+      cs add cscope.out
+   " else add database pointed to by environment
+   elseif $CSCOPE_DB != ""
+      cs add $CSCOPE_DB
+   endif
+   set csverb
+endif
+nmap <localleader>s :cs find s <C-R>=expand("<cword>")<cr><cr>
+nmap <localleader>g :cs find g <C-R>=expand("<cword>")<cr><cr>
+nmap <localleader>c :cs find c <C-R>=expand("<cword>")<cr><cr>
+nmap <localleader>t :cs find t <C-R>=expand("<cword>")<cr><cr>
+nmap <localleader>e :cs find e <C-R>=expand("<cword>")<cr><cr>
+nmap <localleader>f :cs find f <C-R>=expand("<cfile>")<cr><cr>
+nmap <localleader>i :cs find i <C-R>=expand("<cfile>")<cr><cr>
+nmap <localleader>d :cs find d <C-R>=expand("<cword>")<cr><cr>
 
 " vimgdb.vim
 if has("gdb")
@@ -180,3 +195,12 @@ if has("gdb")
 	let g:vimgdb_debug_file=""
 	run macros/gdb_mappings.vim
 endif
+
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_version_warning = 0

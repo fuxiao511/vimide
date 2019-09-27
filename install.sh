@@ -18,6 +18,8 @@ cp ./vimrc ~/.vimrc
 # remove all hidden files, such as .svn ...
 find ~/.vim -type d -name '.svn' | xargs rm -rf
 echo "done!" 
-
+echo "cp -rf tmux.conf /etc/"
+cp -rf tmux.conf /etc/
+echo "cp -rf tmux.conf /etc/"
 ### finish install
 echo "install finished, enjoy yourself!"
